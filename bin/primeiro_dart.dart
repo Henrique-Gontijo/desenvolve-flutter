@@ -1,8 +1,3 @@
-
-//?	==========================
-//?	TIPOS DE DADOS E VARIÁVEIS
-//?	==========================
-
 /* 
 *	Da mesma maneira que o Java, em Dart é necessária a chamada do método`void main() {}`
 *	para indicar o código a ser executado para o compilador.
@@ -12,82 +7,85 @@
 
 void main() {
 
-	print("==========================\nTIPOS DE DADOS E VARIÁVEIS\n==========================\n");
-//?	Tipo para números inteiros (int)
-	int n = 5;
-	print('${n.runtimeType}: $n');
-
-
-//?	Tipo para números decimais (double)
-	double d = 3.14;
-	print('${d.runtimeType}: $d');
-
-//?	Tipo booleano (boo)
-	bool t = true;
-	print('${t.runtimeType}: $t');
-
-//?	Tipo texto (String)
-	String text = "Hello World!";
-	print('${text.runtimeType}: $text');
-
-//?	Tipo dinâmico (var) - O Dart infere o tipo automáticamente
-	var number = 0;
-	print('var - ${number.runtimeType}: $number');
-
-	var phrase = "Ao verme que primeiro roeu as frias carnes de meu cadáver dedico como saudosa lembrança estas memórias póstumas";
-	print('var - ${phrase.runtimeType}: $phrase');
-
-//? 	Tipo dinâmico (dynamic)
-//?	- Permite a mudança de tipo, mas deve ser evitado (afinal, isto não é JavaScript)
-
-	dynamic something = "text";
-	print('dynamic/${something.runtimeType}: $something');
-	something = 123;
-	print('dynamic/${something.runtimeType}: $something');
-
-
-//? ========================== 
-//? 		OPERADORES 
-//? ========================== 
-
-print("\n\n==========================\nOPERADORES \n==========================\n");
+	print("========================== \nESTRUTURAS CONDICIONAIS\n========================== \n");
+	//? ========================== 
+	//? ESTRUTURAS CONDICIONAIS 
+	//? ========================== 
  
-  //? Operadores aritméticos 
-  int a = 10, b = 3; 
-  print('Soma: ${a + b}');        // Adição 
-  print('Subtração: ${a - b}');   // Subtração 
-  print('Multiplicação: ${a * b}'); // Multiplicação 
-  print('Divisão: ${a / b}');     // Divisão (resultado double) 
-  print('Divisão inteira: ${a ~/ b}'); // Divisão inteira 
-  print('Resto da divisão: ${a % b}'); // Módulo (resto da divisão) 
+	// IF-ELSE: Usado para tomar decisões com base em condições 
+	int idade = 18; 
  
-  //? Operadores de comparação (retornam booleano) 
-  print('É maior? ${a > b}');   // true 
-  print('É menor? ${a < b}');   // false 
-  print('É igual? ${a == b}');  // false 
-  print('É diferente? ${a != b}'); // true 
+	if (idade >= 18) { 
+	print('Você é maior de idade.'); 
+	} else { 
+	print('Você é menor de idade.'); 
+	} 
  
-  //? Operadores lógicos 
-  bool cond1 = true, cond2 = false; 
-  print('AND (&&): ${cond1 && cond2}'); // false (ambos precisam ser verdadeiros) 
-  print('OR (|): ${cond1 | cond2}');  // true (basta um ser verdadeiro) 
-  print('NOT (!): ${!cond1}');          // false (inverte o valor) 
+	// IF-ELSE ANINHADO: Quando há múltiplas condições 
+	int nota = 75; 
  
-  //? Operador de incremento e decremento 
-  int contador = 5; 
-  print('Antes do incremento: $contador'); 
-  contador++; // Equivalente a contador = contador + 1; 
-  print('Depois do incremento: $contador'); 
+	if (nota >= 90) { 
+		print('Nota A'); 
+	} else if (nota >= 80) { 
+		print('Nota B'); 
+	} else if (nota >= 70) { 
+		print('Nota C'); 
+	} else { 
+		print('Reprovado'); 
+	}
+
  
-  contador--; // Equivalente a contador = contador - 1; 
-  print('Depois do decremento: $contador'); 
+	//? ========================== 
+	//? ESTRUTURA SWITCH 
+	//? ========================== 
  
-  //? Operador de atribuição composta 
-  int numero = 10; 
-  numero += 5; // Equivalente a numero = numero + 5; 
-  print('Número após += 5: $numero'); 
+	print("\n\n==========================\nOPERADORES \n==========================\n");
+
+	// SWITCH-CASE: Alternativa ao if-else quando há muitas comparações de um mesmo valor
+	String diaSemana = "segunda"; 
  
-  numero *= 2; // Equivalente a numero = numero * 2; 
  
-  print('Número após *= 2: $numero');
+	switch (diaSemana) { 
+		case "segunda": 
+			print("Hoje é segunda-feira."); 
+			break; 
+		case "terça": 
+			print("Hoje é terça-feira."); 
+		break; 
+			case "quarta": 
+			print("Hoje é quarta-feira."); 
+			break; 
+		default: 
+			print("Dia inválido ou não especificado.");
+	}
+
+	//? ========================== 
+	//? LAÇOS DE REPETIÇÃO (LOOPS) 
+	//? ========================== 
+ 
+	print("\n\n==========================\nOPERADORES \n==========================\n");
+
+	// FOR: Loop com número fixo de repetições 
+	print('Contando de 1 a 5 com for:'); 
+	for (int i = 1; i <= 5; i++) { 
+		print('Número $i'); 
+	} 
+ 
+	// WHILE: Executa enquanto a condição for verdadeira 
+	print('Contando de 5 a 1 com while:'); 
+	int contador = 5; 
+	while (contador >= 1) { 
+		print('Número $contador'); 
+		contador--; // Decremento para evitar loop infinito 
+	} 
+ 
+	// DO-WHILE: Semelhante ao while, mas garante que o bloco será executado pelo menos uma vez 
+	print('Exemplo de do-while:'); 
+	int num = 0; 
+	do { 
+		print('Executando do-while, número: $num'); 
+		num++; 
+	} while (num < 3);
+ 
+  
 }

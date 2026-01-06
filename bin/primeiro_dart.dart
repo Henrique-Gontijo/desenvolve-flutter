@@ -7,75 +7,85 @@
 
 void main() {
 
-	//? ==================== LISTAS ====================
+	//? ==================== 
+	//? BREAK 
+	//? ====================
 
-	// Criando uma lista de números inteiros 
-	List<int> numeros = [10, 20, 30, 40]; 
+	print("====================\nBREAK\n====================\n");
 
-	// Acessando elementos pelo índice (começa do 0) 
-	print(numeros[0]); // 10 
+	for (int i = 1; i <= 5; i++) { 
+		if (i == 3) { 
+			print('Parando no número 3'); 
+			break; // Interrompe o loop 
+		} 
+		print(i); 
+	} 
 
-	// Adicionando um novo elemento à lista 
-	numeros.add(50); 
-	print(numeros); // [10, 20, 30, 40, 50] 
+	String cor = "vermelho"; 
 
-	// Removendo um elemento 
-	numeros.remove(20); 
-	print(numeros); // [10, 30, 40, 50] 
+	switch (cor) { 
 
-	// Iterando sobre a lista 
-	for (int numero in numeros) { 
-		print(numero); 
+		case "azul": 
+			print("A cor escolhida é azul."); 
+			break; 
+		case "vermelho": 
+			print("A cor escolhida é vermelho."); 
+			break; 
+		default: 
+			print("Cor não reconhecida."); 
 	}
 
 
-	//? ==================== MAPAS ====================
 
-	// Criando um mapa associando países às suas capitais 
-	Map<String, String> capitais = { 
-		'Brasil': 'Brasília', 
-		'França': 'Paris', 
-		'Japão': 'Tóquio' 
-	}; 
- 
-	// Acessando um valor pela chave 
-	print(capitais['Brasil']); // Brasília 
+	//? ==================== 
+	//? CONTINUE 
+	//? ====================
 
-	// Adicionando um novo par chave-valor 
-	capitais['EUA'] = 'Washington, D.C.'; 
-	print(capitais); 
-
-	// Removendo um elemento 
-	capitais.remove('França'); 
-	print(capitais); 
-
-	// Iterando sobre um mapa 
-	capitais.forEach((pais, capital) { 
-		print('$pais: $capital'); 
-	});
+	print("\n\n====================\nCONTINUE\n====================\n");
 
 
-	//? ==================== CoONJUNTOS (Set's) ====================
+	for (int i = 1; i <= 5; i++) { 
+		if (i == 3) { 
+			print('Pulando o número 3'); 
+			continue; // Pula essa iteração e vai para o próximo número 
+		} 
+		print(i); 
+	} 
 
-	// Criando um conjunto de números 
-	Set<int> numerosUnicos = {1, 2, 3, 4, 5, 5, 5}; 
+	int num = 0; 
 
-	// Exibindo o conjunto (valores duplicados são ignorados) 
-	print(numerosUnicos); // {1, 2, 3, 4, 5} 
-
-	// Adicionando um novo número 
-	numerosUnicos.add(6); 
-	print(numerosUnicos); // {1, 2, 3, 4, 5, 6} 
-
-	// Removendo um número 
-	numerosUnicos.remove(2); 
-	print(numerosUnicos); // {1, 3, 4, 5, 6} 
-
-	// Verificando se um número está no conjunto 
-	print(numerosUnicos.contains(3)); // true 
-
-	// Iterando sobre um conjunto 
-	for (int num in numerosUnicos) { 
+	while (num < 5) { 
+		num++; 
+		if (num == 3) { 
+			print('Pulando o número 3'); 
+			continue; 
+		} 
 		print(num); 
 	}
+
+
+
+	//? ==================== 
+	//? RETURN 
+	//? ====================
+
+	print("\n\n====================\nRETURN\n====================\n");
+
+	int dobrar(int numero) { 
+		return numero * 2; // Retorna o resultado 
+	} 
+
+	int resultado = dobrar(5); 
+	print('O dobro de 5 é $resultado'); 
+
+	void verificarIdade(int idade) { 
+		if (idade < 18) { 
+			print('Acesso negado.'); 
+			return; // Sai da função imediatamente 
+		} 
+		print('Acesso permitido.'); 
+	}
+
+	verificarIdade(16); // Acesso negado. 
+  	verificarIdade(20); // Acesso permitido. 
 }

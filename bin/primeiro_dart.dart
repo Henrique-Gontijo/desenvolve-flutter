@@ -6,101 +6,121 @@
 */
 
 //?	==============================
-//? PERSONALIZAÇÃO DE EXCEPTION
+//? FUNÇÕES ASSÍNCRONAS
 //?	==============================
 
-// Criando uma exceção personalizada 
-class SaldoInsuficienteException implements Exception { 
-  String errorMessage() { 
-    return 'Erro: Saldo insuficiente para a operação!'; 
-  } 
+// Função assíncrona simulando uma operação demorada 
+Future<String> carregarDados() async { 
+  print('Carregando dados...'); 
+  await Future.delayed(Duration(seconds: 2)); // Simulando espera 
+  return 'Dados carregados!'; 
+}
+
+//?	==============================
+//? FUNÇÕES ASSÍNCRONAS E ERROS
+//?	==============================
+
+// Função que pode gerar erro 
+Future<String> buscarUsuario() async { 
+	await Future.delayed(Duration(seconds: 2)); 
+	throw Exception('Erro ao buscar usuário!'); 
+}
+
+//?	==============================
+//? SIMULAÇÃO DE CARREGAMENTO
+//?	==============================
+
+// Simulando carregamento de dados 
+Future<String> carregarPerfil() async { 
+	await Future.delayed(Duration(seconds: 2)); 
+	return 'Perfil carregado'; 
 } 
  
-// Classe Conta Bancária 
-class ContaBancaria { 
-  String titular; 
-  double saldo; 
+Future<String> carregarMensagens() async { 
+	await Future.delayed(Duration(seconds: 3)); 
+	return 'Mensagens carregadas'; 
+}
  
-  ContaBancaria(this.titular, this.saldo); 
- 
-  // Método para sacar dinheiro 
- 
-  void sacar(double valor) { 
-    if (valor > saldo) { 
-      throw SaldoInsuficienteException(); // Lançando nossa exceção 
-    } 
-    saldo -= valor; 
-    print('Saque de R\$ $valor realizado. Saldo atual: R\$ $saldo'); 
-  } 
-} 
 
-void main() {
+/*
+* Para a chamada de resultados assíncronos com `await` é preciso marcar a função como `async` (isso também vale para o "main")
+*/
+void main() async {
 
-	print('\n\n==============================\nTRY - CATCH\n==============================\n\n');
+	print("\n\n==============================\nFUNÇÕES COMUNS\n==============================\n\n");
+
+	print('Início do programa'); 
+
+	Future<String> tarefa = Future.delayed(Duration(seconds: 3), () { 
+		return 'Tarefa concluída!'; 
+	}); 
+
+	tarefa.then((resultado) => print(resultado)); 
+
+	print('Fim do programa (mas a tarefa ainda está rodando)');
+
+	/* 
+		Explicação 
+		Future.delayed(Duration(seconds: 3), () {...}) simula uma operação 
+		demorada (3 segundos). 
+		
+		O then((resultado) => print(resultado)) aguarda e imprime o resultado 
+		quando a tarefa é concluída. 
+		O programa continua rodando sem esperar a tarefa terminar. 
+	*/
+
+	print("\n\n==============================\nFUNÇÕES ASSÍCRONAS\n==============================\n\n");
+
+	print('Início do programa'); 
+
+	String resultado = await carregarDados(); // Aguarda o Future ser resolvido 
+	print(resultado); 
+
+	print('Fim do programa'); 
+
+	/* 
+		Explicação 
+		async indica que carregarDados() retorna um Future. 
+		await pausa a execução até que Future.delayed() termine. 
+		Agora o código parece síncrono, mas sem travar o programa. 
+	*/
+
+	print("\n\n==============================\nFUNÇÕES ASSÍCRONAS E ERROS\n==============================\n\n");
+
+	print('Buscando usuário...'); 
 
 	try { 
-		int resultado = 10 ~/ 0; // ERRO: Divisão por zero 
-		print('O resultado é $resultado'); 
+		String usuario = await buscarUsuario(); 
+		print('Usuário encontrado: $usuario'); 
 	} catch (e) { 
 		print('Erro capturado: $e'); 
-	}
+	} 
+
+	print('Programa finalizado'); 
 
 	/* 
 		Explicação 
-		O código dentro do try tenta dividir 10 por 0 (erro). 
-		O catch captura a exceção e exibe a mensagem "Erro capturado: 
-		IntegerDivisionByZeroException". 
-		O programa não trava e continua executando.
+		try-catch captura exceções em funções assíncronas. 
+		Se buscarUsuario() falhar, o erro é tratado sem travar o programa. 
 	*/
 
-	print('\n\n==============================\nTRY - ON [Error] - CATCH\n==============================\n\n');
+	print("\n\n==============================\nSIMULAÇÃO DE CARREGAMENTO\n==============================\n\n");
 
-	try { 
-		List<int> numeros = [1, 2, 3]; 
-		print(numeros[5]); // ERRO: Índice fora do intervalo 
-	} on RangeError { 
-		print('Erro: Tentou acessar um índice inválido.'); 
-	} catch (e) { 
-		print('Erro genérico capturado: $e'); 
-	}
+	print('Carregando perfil e mensagens ao mesmo tempo...'); 
+
+	// Executa ambas as funções ao mesmo tempo 
+	List<String> resultados = await Future.wait([carregarPerfil(), 
+	carregarMensagens()]); 
+
+	print(resultados[0]); // Perfil carregado 
+	print(resultados[1]); // Mensagens carregadas 
+
+	print('Tudo carregado!');
 
 	/* 
 		Explicação 
-		on RangeError captura exclusivamente erros de índice inválido em listas. 
-		O catch genérico pega outros erros, caso ocorram. 
+		Future.wait([...]) executa várias funções assíncronas ao mesmo tempo. 
+		O programa espera todas terminarem antes de continuar. 
 	*/
 
-	print('\n\n==============================\nTRY - CATCH - FINALLY\n==============================\n\n');
-
-	try { 
-		int resultado = 10 ~/ 0; 
-		print('Resultado: $resultado'); 
-	} catch (e) { 
-		print('Erro capturado: $e'); 
-	} finally { 
-		print('Execução finalizada.'); 
-	}
-
-	/* 
-		Explicação 
-		O catch captura o erro de divisão por zero. 
-		O finally executa "Execução finalizada.", independente do erro. 
-	*/
-
-	print('\n\n==============================\nPERSONALIZAÇÃO DE EXCEPTION\n==============================\n\n');
-
-	ContaBancaria conta = ContaBancaria('Keila', 500.0); 
-
-	try { 
-		conta.sacar(600.0); // Vai gerar erro pois saldo é insuficiente 
-	} catch (e) { 
-		print(e is SaldoInsuficienteException ? e.errorMessage() : 'Erro desconhecido.'); 
-	}
-	/*
-		Explicação 
-		Criamos a exceção personalizada SaldoInsuficienteException. 
-		No método sacar(), se o valor for maior que o saldo, lançamos a exceção 
-		(throw). 
-		No catch, verificamos se o erro é do tipo correto. 
-	*/ 
 }

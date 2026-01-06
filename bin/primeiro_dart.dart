@@ -7,85 +7,78 @@
 
 void main() {
 
-	print("========================== \nESTRUTURAS CONDICIONAIS\n========================== \n");
 	//? ========================== 
-	//? ESTRUTURAS CONDICIONAIS 
+	//? DEFININDO UMA FUNÇÃO SIMPLES 
 	//? ========================== 
+
+	print("==========================\nDEFININDO UMA FUNÇÃO SIMPLES \n==========================\n");
  
-	// IF-ELSE: Usado para tomar decisões com base em condições 
-	int idade = 18; 
- 
-	if (idade >= 18) { 
-	print('Você é maior de idade.'); 
-	} else { 
-	print('Você é menor de idade.'); 
+	// Uma função simples que imprime uma mensagem 
+	void saudacao() { 
+		print('Olá, seja bem-vindo ao Dart!'); 
 	} 
  
-	// IF-ELSE ANINHADO: Quando há múltiplas condições 
-	int nota = 75; 
- 
-	if (nota >= 90) { 
-		print('Nota A'); 
-	} else if (nota >= 80) { 
-		print('Nota B'); 
-	} else if (nota >= 70) { 
-		print('Nota C'); 
-	} else { 
-		print('Reprovado'); 
-	}
+	// Chamando a função 
+  	saudacao();
 
- 
-	//? ========================== 
-	//? ESTRUTURA SWITCH 
-	//? ========================== 
- 
-	print("\n\n==========================\nOPERADORES \n==========================\n");
-
-	// SWITCH-CASE: Alternativa ao if-else quando há muitas comparações de um mesmo valor
-	String diaSemana = "segunda"; 
- 
- 
-	switch (diaSemana) { 
-		case "segunda": 
-			print("Hoje é segunda-feira."); 
-			break; 
-		case "terça": 
-			print("Hoje é terça-feira."); 
-		break; 
-			case "quarta": 
-			print("Hoje é quarta-feira."); 
-			break; 
-		default: 
-			print("Dia inválido ou não especificado.");
-	}
 
 	//? ========================== 
-	//? LAÇOS DE REPETIÇÃO (LOOPS) 
+	//? FUNÇÕES COM PARÂMETROS 
 	//? ========================== 
  
-	print("\n\n==========================\nOPERADORES \n==========================\n");
-
-	// FOR: Loop com número fixo de repetições 
-	print('Contando de 1 a 5 com for:'); 
-	for (int i = 1; i <= 5; i++) { 
-		print('Número $i'); 
+	print("\n\n==========================\nFUNÇÕES COM PARÂMETROS\n==========================\n");
+ 
+	// Função que recebe um parâmetro e exibe uma mensagem personalizada 
+	void cumprimentar(String nome) { 
+		print('Olá, $nome! Como você está?'); 
 	} 
  
-	// WHILE: Executa enquanto a condição for verdadeira 
-	print('Contando de 5 a 1 com while:'); 
-	int contador = 5; 
-	while (contador >= 1) { 
-		print('Número $contador'); 
-		contador--; // Decremento para evitar loop infinito 
+	// Chamando a função com um argumento 
+	cumprimentar('Keila'); 
+ 
+	// Função que soma dois números recebidos como parâmetros 
+	void somar(int a, int b) { 
+		int resultado = a + b; 
+		print('A soma de $a + $b é igual a $resultado'); 
 	} 
  
-	// DO-WHILE: Semelhante ao while, mas garante que o bloco será executado pelo menos uma vez 
-	print('Exemplo de do-while:'); 
-	int num = 0; 
-	do { 
-		print('Executando do-while, número: $num'); 
-		num++; 
-	} while (num < 3);
+	// Chamando a função somar 
+	somar(5, 3);   
+
+	//? ========================== 
+	//? FUNÇÕES COM RETORNO 
+	//? ========================== 
+
+	print("\n\n==========================\nFUNÇÕES COM RETORNO \n==========================\n");
  
-  
+	// Função que retorna a soma de dois números 
+	int somaComRetorno(int a, int b) { 
+		return a + b; 
+	} 
+ 
+	// Chamando a função e armazenando o resultado em uma variável 
+	int resultadoSoma = somaComRetorno(10, 20); 
+	print('Resultado da soma com retorno: $resultadoSoma');
+
+
+
+	//? ========================== 
+	//? FUNÇÕES ANÔNIMAS (LAMBDA) 
+	//? ==========================
+
+	print("\n\n==========================\nFUNÇÕES ANÔNIMAS (LAMBDA)\n==========================\n");
+ 
+	// Uma função anônima (lambda) é uma função sem nome 
+	var multiplicar = (int x, int y) { 
+		return x * y; 
+	}; 
+ 
+	// Chamando a função anônima 
+	print('Multiplicação: ${multiplicar(4, 5)}'); 
+ 
+	// Forma simplificada de uma função lambda (Arrow Function) 
+	var dividir = (int x, int y) => x / y; 
+ 
+	// Chamando a função lambda simplificada 
+	print('Divisão: ${dividir(10, 2)}'); 
 }

@@ -6,48 +6,35 @@
 */
 
 //?	==============================
-//? FUNÇÕES ASSÍNCRONAS
+//? PERSONALIZAÇÃO DE EXCEPTION
 //?	==============================
 
-// Função assíncrona simulando uma operação demorada 
-Future<String> carregarDados() async { 
-  print('Carregando dados...'); 
-  await Future.delayed(Duration(seconds: 2)); // Simulando espera 
-  return 'Dados carregados!'; 
-}
-
-//?	==============================
-//? FUNÇÕES ASSÍNCRONAS E ERROS
-//?	==============================
-
-// Função que pode gerar erro 
-Future<String> buscarUsuario() async { 
-	await Future.delayed(Duration(seconds: 2)); 
-	throw Exception('Erro ao buscar usuário!'); 
-}
-
-//?	==============================
-//? SIMULAÇÃO DE CARREGAMENTO
-//?	==============================
-
-// Simulando carregamento de dados 
-Future<String> carregarPerfil() async { 
-	await Future.delayed(Duration(seconds: 2)); 
-	return 'Perfil carregado'; 
+// Criando uma exceção personalizada 
+class SaldoInsuficienteException implements Exception { 
+  String errorMessage() { 
+    return 'Erro: Saldo insuficiente para a operação!'; 
+  } 
 } 
  
-Future<String> carregarMensagens() async { 
-	await Future.delayed(Duration(seconds: 3)); 
-	return 'Mensagens carregadas'; 
-}
+// Classe Conta Bancária 
+class ContaBancaria { 
+  String titular; 
+  double saldo; 
  
+  ContaBancaria(this.titular, this.saldo); 
+ 
+  // Método para sacar dinheiro 
+ 
+  void sacar(double valor) { 
+    if (valor > saldo) { 
+      throw SaldoInsuficienteException(); // Lançando nossa exceção 
+    } 
+    saldo -= valor; 
+    print('Saque de R\$ $valor realizado. Saldo atual: R\$ $saldo'); 
+  } 
+} 
 
-/*
-* Para a chamada de resultados assíncronos com `await` é preciso marcar a função como `async` (isso também vale para o "main")
-*/
-void main() async {
-
-	print("\n\n==============================\nFUNÇÕES COMUNS\n==============================\n\n");
+void main() {
 
 	print('Início do programa'); 
 
@@ -67,60 +54,6 @@ void main() async {
 		O then((resultado) => print(resultado)) aguarda e imprime o resultado 
 		quando a tarefa é concluída. 
 		O programa continua rodando sem esperar a tarefa terminar. 
-	*/
-
-	print("\n\n==============================\nFUNÇÕES ASSÍCRONAS\n==============================\n\n");
-
-	print('Início do programa'); 
-
-	String resultado = await carregarDados(); // Aguarda o Future ser resolvido 
-	print(resultado); 
-
-	print('Fim do programa'); 
-
-	/* 
-		Explicação 
-		async indica que carregarDados() retorna um Future. 
-		await pausa a execução até que Future.delayed() termine. 
-		Agora o código parece síncrono, mas sem travar o programa. 
-	*/
-
-	print("\n\n==============================\nFUNÇÕES ASSÍCRONAS E ERROS\n==============================\n\n");
-
-	print('Buscando usuário...'); 
-
-	try { 
-		String usuario = await buscarUsuario(); 
-		print('Usuário encontrado: $usuario'); 
-	} catch (e) { 
-		print('Erro capturado: $e'); 
-	} 
-
-	print('Programa finalizado'); 
-
-	/* 
-		Explicação 
-		try-catch captura exceções em funções assíncronas. 
-		Se buscarUsuario() falhar, o erro é tratado sem travar o programa. 
-	*/
-
-	print("\n\n==============================\nSIMULAÇÃO DE CARREGAMENTO\n==============================\n\n");
-
-	print('Carregando perfil e mensagens ao mesmo tempo...'); 
-
-	// Executa ambas as funções ao mesmo tempo 
-	List<String> resultados = await Future.wait([carregarPerfil(), 
-	carregarMensagens()]); 
-
-	print(resultados[0]); // Perfil carregado 
-	print(resultados[1]); // Mensagens carregadas 
-
-	print('Tudo carregado!');
-
-	/* 
-		Explicação 
-		Future.wait([...]) executa várias funções assíncronas ao mesmo tempo. 
-		O programa espera todas terminarem antes de continuar. 
 	*/
 
 }

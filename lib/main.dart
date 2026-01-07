@@ -1,112 +1,106 @@
-import 'package:flutter/material.dart';
-
+import 'package:flutter/material.dart'; 
 
 void main() { 
 runApp(const MyApp()); // Inicia o app 
-}
+} 
 
-
+// O app principal com temas personalizados 
 class MyApp extends StatelessWidget { 
   const MyApp({super.key}); 
+
   @override 
   Widget build(BuildContext context) { 
     return MaterialApp( 
+
       debugShowCheckedModeBanner: false, // Remove o banner de debug 
-      home: Scaffold( 
-        appBar: AppBar( 
-          title: const Text('Exemplo de Layouts'), 
-          backgroundColor: Colors.blueAccent, 
+      title: 'Estilos e Temas', 
+
+      // Definição do Tema Global (claro e escuro) 
+      theme: ThemeData( 
+        brightness: Brightness.light, // Tema claro 
+        primaryColor: Colors.green, // Cor principal 
+        scaffoldBackgroundColor: Colors.white, // Cor de fundo do app 
+        textTheme: const TextTheme( 
+          bodyLarge: TextStyle(fontSize: 18, color: Colors.black), // Texto principal 
+          bodyMedium: TextStyle(fontSize: 16, color: Colors.black87), // Texto secundário 
         ), 
-        body: Column( 
-          children: [ 
-            // Stack para sobrepor widgets 
-            Expanded( 
-              child: Stack( 
-                children: [ 
-                  // Container de fundo (imagem de fundo simulada) 
-                  Container( 
-                    width: double.infinity, 
-                    height: double.infinity, 
-                    color: Colors.blue[100], // Fundo azul claro 
-                  ), 
-                  // Texto centralizado sobreposto na Stack 
-                  const Center( 
-                    child: Text( 
-                      'Texto Centralizado no Stack', 
-                      style: TextStyle( 
-                        fontSize: 20, 
-                        fontWeight: FontWeight.bold, 
-                        color: Colors.black, 
-                      ), 
-                    ), 
-                  ), 
-
-                  // Um botão posicionado no canto inferior direito 
-                  Positioned( 
-                    bottom: 20, 
-                    right: 20,
-                    child: FloatingActionButton( 
-                      onPressed: () {}, 
-                      backgroundColor: Colors.blue, 
-                      child: const Icon(Icons.add), 
-                    ), 
-                  ), 
-                ], 
-              ), 
+        elevatedButtonTheme: ElevatedButtonThemeData( 
+          style: ElevatedButton.styleFrom( 
+            backgroundColor: Colors.lightGreen, // Cor de fundo dos botões 
+            foregroundColor: Colors.white, // Cor do texto 
+            textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), 
+            shape: RoundedRectangleBorder( 
+              borderRadius: BorderRadius.circular(10), // Bordas arredondadas 
             ), 
-
-            // Espaço entre Stack e Row 
-            const SizedBox(height: 20), 
-
-            // Row para organizar elementos horizontalmente 
-            Row( 
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
-              children: [ 
-                // Criando botões em um Row com tons de azul 
-                ElevatedButton( 
-                  onPressed: () {}, 
-                  style: ElevatedButton.styleFrom( 
-                    backgroundColor: Colors.blue, // Cor de fundo azul 
-                    foregroundColor: Colors.white, // Cor do texto branca 
-                  ), 
-                  child: const Text('Botão 1'), 
-                ), 
-                ElevatedButton( 
-                  onPressed: () {}, 
-                  style: ElevatedButton.styleFrom( 
-                    backgroundColor: Colors.blueAccent, // Tom diferente de azul 
-                    foregroundColor: Colors.white, // Cor do texto branca 
-                  ), 
-                  child: const Text('Botão 2'), 
-                ), 
-                ElevatedButton( 
-                  onPressed: () {}, 
-                  style: ElevatedButton.styleFrom( 
-                    backgroundColor: Colors.lightBlue, // Azul mais claro 
-                    foregroundColor: Colors.white, // Cor do texto branca 
-                  ), 
-                  child: const Text('Botão 3'), 
-                ), 
-
-              ], 
-            ), 
-            // Espaço antes do Footer 
-            const SizedBox(height: 20), 
-
-            // Footer com Container 
-            Container( 
-              width: double.infinity,
-              padding: const EdgeInsets.all(10), 
-              color: Colors.blueAccent, 
-              child: const Text( 
-                'Footer - Exemplo de Layout', 
-                textAlign: TextAlign.center, 
-                style: TextStyle(color: Colors.white, fontSize: 16), 
-              ), 
-            ), 
-          ], 
+          ), 
         ), 
       ), 
+
+      darkTheme: ThemeData( 
+        brightness: Brightness.dark, // Tema escuro 
+        primaryColor: Colors.blueGrey, 
+        scaffoldBackgroundColor: Colors.black, 
+        textTheme: const TextTheme( 
+          bodyLarge: TextStyle(fontSize: 18, color: Colors.white), // Texto principal 
+          bodyMedium: TextStyle(fontSize: 16, color: Colors.white70), //Texto secundário 
+
+        ), 
+        elevatedButtonTheme: ElevatedButtonThemeData( 
+          style: ElevatedButton.styleFrom( 
+            backgroundColor: Colors.blueGrey, // Cor no modo escuro 
+            foregroundColor: Colors.white, // Cor do texto 
+          ), 
+        ), 
+      ), 
+
+      themeMode: ThemeMode.system, // Alterna automaticamente entre claro/escuro 
+
+      home: const HomeScreen(), // Tela inicial 
     ); 
   } 
-}
+} 
+
+// Tela principal do aplicativo 
+class HomeScreen extends StatelessWidget { 
+  const HomeScreen({super.key}); 
+
+  @override 
+  Widget build(BuildContext context) { 
+      return Scaffold(
+        appBar: AppBar( 
+          title: const Text('Estilos e Temas'), 
+          backgroundColor: Theme.of(context).primaryColor, // Usa a cor principal do tema 
+        ), 
+        body: Center( 
+            child: Column( 
+            mainAxisAlignment: MainAxisAlignment.center, 
+            children: [ 
+              // Exemplo de texto estilizado pelo tema global 
+              Text( 
+                'Texto com estilo global!', 
+                style: Theme.of(context).textTheme.bodyLarge, 
+              ), 
+
+              const SizedBox(height: 20), // Espaçamento 
+
+              // Exemplo de texto com estilo personalizado (local) 
+              const Text( 
+                'Texto com estilo local!', 
+                style: TextStyle( 
+                  fontSize: 20, 
+                  fontWeight: FontWeight.bold, 
+                  color: Colors.deepPurple, 
+                ), 
+              ), 
+              const SizedBox(height: 20), // Espaçamento 
+              // Botão estilizado automaticamente pelo tema global 
+              ElevatedButton( 
+                onPressed: () {}, 
+                child: const Text('Botão com Tema'), 
+              ), 
+            ], 
+          ), 
+        ), 
+      ); 
+  } // Widget
+} // Home Screen

@@ -1,77 +1,106 @@
 import 'package:flutter/material.dart'; 
 void main() { 
-  runApp(const MyApp()); // Inicia o app 
+  runApp(const MyApp()); // Inicia o aplicativo 
 } 
+// O app principal que exibe a SplashScreen primeiro 
 class MyApp extends StatelessWidget { 
   const MyApp({super.key}); 
   @override 
   Widget build(BuildContext context) { 
     return MaterialApp( 
-      debugShowCheckedModeBanner: false, 
-      // Remove o banner de debug 
-      title: 'Navegação entre Telas', 
+      debugShowCheckedModeBanner: false, // Remove o banner de debug 
+      title: 'Tela de Abertura', 
       theme: ThemeData( 
-        primarySwatch: Colors.blue, // Tema azul para o app 
+        primarySwatch: Colors.blue, // Cor principal azul 
       ), 
-      home: const HomeScreen(), // Define a tela inicial 
+      home: const SplashScreen(), // Define a SplashScreen como primeira tela 
     ); 
   } 
 } 
-// Tela Inicial 
-class HomeScreen extends StatelessWidget { 
-
-  const HomeScreen({super.key}); 
-
+// Tela de Abertura (Splash Screen) 
+class SplashScreen extends StatefulWidget { 
+ 
+  const SplashScreen({super.key}); 
+ 
+  @override 
+  _SplashScreenState createState() => _SplashScreenState(); 
+} 
+ 
+// Estado da SplashScreen 
+class _SplashScreenState extends 
+State<SplashScreen> { 
+  @override 
+  void initState() { 
+    super.initState(); 
+ 
+    // Aguarda 3 segundos e navega para a Tela Principal 
+    Future.delayed(const Duration(seconds: 3), () { 
+      Navigator.pushReplacement( 
+        context, 
+        MaterialPageRoute(builder: (context) => const HomeScreen()), 
+      ); 
+    }); 
+  } 
+ 
   @override 
   Widget build(BuildContext context) { 
     return Scaffold( 
-      appBar: AppBar( 
-        title: const Text('Tela Inicial'), 
-      ), 
+      backgroundColor: Colors.blue, // Fundo azul para a SplashScreen 
       body: Center( 
-        child: ElevatedButton( 
-          onPressed: () { 
-            // Navega para a Segunda Tela quando pressionado 
-            Navigator.push( 
-              context, 
-              MaterialPageRoute(builder: 
-              (context) => const SecondScreen()), 
-            ); 
-          }, 
-          style: 
-          ElevatedButton.styleFrom( 
-            backgroundColor: Colors.blue, // Botão azul 
-            foregroundColor: Colors.white, // Texto branco 
-          ), child: const Text('Ir para a Segunda Tela'), 
+        child: Column( 
+          mainAxisAlignment: MainAxisAlignment.center, 
+          children: [ 
+            // Ícone do app (pode ser substituído por um logo) 
+            const Icon( 
+              Icons.flutter_dash, // Ícone do Flutter 
+              size: 100, 
+              color: Colors.white, 
+            ), 
+             
+            const SizedBox(height: 20), // Espaço entre os widgets 
+             
+            // Texto animado (Fade-in) 
+            TweenAnimationBuilder<double>( 
+              tween: Tween<double>(begin: 0, end: 1), 
+              duration: const Duration(seconds: 3), 
+              builder: (context, value, child) { 
+                return Opacity( 
+ 
+                  opacity: value, 
+                  child: const Text( 
+                    'Bem-vindo ao App!', 
+                    style: TextStyle( 
+                      fontSize: 24, 
+                      fontWeight: FontWeight.bold, 
+                      color: Colors.white, 
+                    ), 
+                  ), 
+                ); 
+              }, 
+            ), 
+          ], 
         ), 
       ), 
     ); 
   } 
 } 
-
-// Segunda Tela 
-class SecondScreen extends StatelessWidget { 
-  const SecondScreen({super.key}); 
-
+ 
+// Tela Principal do App 
+class HomeScreen extends StatelessWidget { 
+  const HomeScreen({super.key}); 
+ 
   @override 
   Widget build(BuildContext context) { 
     return Scaffold( 
       appBar: AppBar( 
-        title: const Text('Segunda Tela'), 
+        title: const Text('Tela Principal'), 
       ), 
-      body: Center( 
-        child: ElevatedButton( 
-          onPressed: () { 
-            // Retorna para a tela anterior quando pressionado 
-            Navigator.pop(context); 
-          }, 
-          style: ElevatedButton.styleFrom( 
-            backgroundColor: Colors.green, // Botão verde 
-            foregroundColor: Colors.white, // Texto branco 
-          ), 
-          child: const Text('Voltar para a Tela Inicial'), 
-        ),  
+      body: const Center( 
+        child: Text( 
+          'Esta é a Tela Principal!', 
+          style: TextStyle(fontSize: 20), 
+        ), 
       ), 
     ); 
   } 
-} 
+}

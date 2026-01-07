@@ -1,9 +1,66 @@
 import 'package:flutter/material.dart'; 
-
+ 
 void main() { 
-  runApp(const MyApp()); 
+  runApp(const MyApp()); // Inicia o aplicativo 
 } 
  
+// Criamos um StatelessWidget que NÃO pode mudar depois de construído 
+class TextoFixo extends StatelessWidget { 
+  const TextoFixo({super.key}); 
+ 
+  @override 
+  Widget build(BuildContext context) { 
+    return const Text( 
+      'Eu sou um StatelessWidget e nunca mudo!', 
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), 
+      textAlign: TextAlign.center, 
+    ); 
+  } 
+} 
+ 
+// Criamos um StatefulWidget que PODE mudar após ser construído 
+class Contador extends StatefulWidget { 
+  const Contador({super.key}); 
+ 
+  @override 
+  State<Contador> createState() => _ContadorState(); 
+} 
+ 
+// A classe de estado para o Contador (StatefulWidget) 
+class _ContadorState extends State<Contador> { 
+  int _contador = 0; // Estado mutável (variável que muda) 
+ 
+  void _incrementar() { 
+    setState(() { 
+      _contador++; // Altera o estado e reconstrói a interface 
+    }); 
+  } 
+ 
+  @override 
+  Widget build(BuildContext context) { 
+    return Column( 
+ 
+      mainAxisAlignment: MainAxisAlignment.center, 
+      children: [ 
+        const Text( 
+          'Eu sou um StatefulWidget e eu mudo!', 
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), 
+        ), 
+        Text( 
+          'Contador: $_contador', // Exibe o valor atualizado do contador 
+          style: const TextStyle(fontSize: 24), 
+        ), 
+        const SizedBox(height: 10), // Espaço entre os elementos 
+        ElevatedButton( 
+          onPressed: _incrementar, // Chama _incrementar() quando pressionado 
+          child: const Text('Incrementar'), 
+        ), 
+      ], 
+    ); 
+  } 
+} 
+ 
+// O app principal que exibe os dois widgets na tela 
 class MyApp extends StatelessWidget { 
   const MyApp({super.key}); 
  
@@ -13,58 +70,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, // Remove o banner de debug 
       home: Scaffold( 
         appBar: AppBar( 
-          title: const Text('Widgets Básicos', style: TextStyle(color: Colors.white)), 
-          backgroundColor: Colors.redAccent, 
+          title: const Text('Stateless vs Stateful'), 
+          backgroundColor: Colors.blueAccent, 
         ), 
-        body: Center( 
+        body: const Center( 
           child: Column( 
-            mainAxisAlignment: MainAxisAlignment.center, // Centraliza os itens 
+            mainAxisAlignment: MainAxisAlignment.center, 
             children: [ 
-              // Exemplo de Container com cor de fundo e borda arredondada 
-              Container( 
-                width: 200, 
-                height: 100, 
-                decoration: BoxDecoration( 
-                  color: Colors.red, // Cor de fundo 
-                  borderRadius: BorderRadius.circular(10), // Borda arredondada 
-                ), 
-                alignment: Alignment.center, // Centraliza o texto no Container 
-                child: const Text( 
-                  'Container Vermelho', 
-                  style: TextStyle(color: Colors.white, fontSize: 18), 
-                ), 
-              ), 
- 
-              const SizedBox(height: 20), // Espaçamento 
- 
- 
-              // Exemplo de Row com dois botões 
-              Row( 
-                mainAxisAlignment: MainAxisAlignment.center, // Centraliza na horizontal 
-                children: [ 
-                  ElevatedButton( 
-                    onPressed: () {}, 
-                    child: const Text('Botão 1'), 
-                  ), 
-                  const SizedBox(width: 20), // Espaçamento entre os botões 
-                  ElevatedButton( 
-                    onPressed: () {}, 
-                    child: const Text('Botão 2'), 
-                  ), 
-                ], 
-              ), 
- 
-              const SizedBox(height: 20), // Espaçamento 
- 
-              // Exemplo de texto simples 
-              const Text( 
-                'Meu "Hello World" no Flutter!', 
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), 
-              ), 
+              TextoFixo(), // Exemplo de um StatelessWidget (não muda) 
+              SizedBox(height: 20), // Espaçamento entre os widgets 
+              Contador(), // Exemplo de um StatefulWidget (muda ao interagir) 
             ], 
           ), 
         ), 
       ), 
     ); 
-  } 
+  }
 }

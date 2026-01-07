@@ -1,89 +1,112 @@
-import 'package:flutter/material.dart'; 
- 
+import 'package:flutter/material.dart';
+
+
 void main() { 
-  runApp(const MyApp()); // Inicia o aplicativo 
-} 
- 
-// Criamos um StatelessWidget que NÃO pode mudar depois de construído 
-class TextoFixo extends StatelessWidget { 
-  const TextoFixo({super.key}); 
- 
-  @override 
-  Widget build(BuildContext context) { 
-    return const Text( 
-      'Eu sou um StatelessWidget e nunca mudo!', 
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), 
-      textAlign: TextAlign.center, 
-    ); 
-  } 
-} 
- 
-// Criamos um StatefulWidget que PODE mudar após ser construído 
-class Contador extends StatefulWidget { 
-  const Contador({super.key}); 
- 
-  @override 
-  State<Contador> createState() => _ContadorState(); 
-} 
- 
-// A classe de estado para o Contador (StatefulWidget) 
-class _ContadorState extends State<Contador> { 
-  int _contador = 0; // Estado mutável (variável que muda) 
- 
-  void _incrementar() { 
-    setState(() { 
-      _contador++; // Altera o estado e reconstrói a interface 
-    }); 
-  } 
- 
-  @override 
-  Widget build(BuildContext context) { 
-    return Column( 
- 
-      mainAxisAlignment: MainAxisAlignment.center, 
-      children: [ 
-        const Text( 
-          'Eu sou um StatefulWidget e eu mudo!', 
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), 
-        ), 
-        Text( 
-          'Contador: $_contador', // Exibe o valor atualizado do contador 
-          style: const TextStyle(fontSize: 24), 
-        ), 
-        const SizedBox(height: 10), // Espaço entre os elementos 
-        ElevatedButton( 
-          onPressed: _incrementar, // Chama _incrementar() quando pressionado 
-          child: const Text('Incrementar'), 
-        ), 
-      ], 
-    ); 
-  } 
-} 
- 
-// O app principal que exibe os dois widgets na tela 
+runApp(const MyApp()); // Inicia o app 
+}
+
+
 class MyApp extends StatelessWidget { 
   const MyApp({super.key}); 
- 
   @override 
   Widget build(BuildContext context) { 
     return MaterialApp( 
       debugShowCheckedModeBanner: false, // Remove o banner de debug 
       home: Scaffold( 
         appBar: AppBar( 
-          title: const Text('Stateless vs Stateful'), 
+          title: const Text('Exemplo de Layouts'), 
           backgroundColor: Colors.blueAccent, 
         ), 
-        body: const Center( 
-          child: Column( 
-            mainAxisAlignment: MainAxisAlignment.center, 
-            children: [ 
-              TextoFixo(), // Exemplo de um StatelessWidget (não muda) 
-              SizedBox(height: 20), // Espaçamento entre os widgets 
-              Contador(), // Exemplo de um StatefulWidget (muda ao interagir) 
-            ], 
-          ), 
+        body: Column( 
+          children: [ 
+            // Stack para sobrepor widgets 
+            Expanded( 
+              child: Stack( 
+                children: [ 
+                  // Container de fundo (imagem de fundo simulada) 
+                  Container( 
+                    width: double.infinity, 
+                    height: double.infinity, 
+                    color: Colors.blue[100], // Fundo azul claro 
+                  ), 
+                  // Texto centralizado sobreposto na Stack 
+                  const Center( 
+                    child: Text( 
+                      'Texto Centralizado no Stack', 
+                      style: TextStyle( 
+                        fontSize: 20, 
+                        fontWeight: FontWeight.bold, 
+                        color: Colors.black, 
+                      ), 
+                    ), 
+                  ), 
+
+                  // Um botão posicionado no canto inferior direito 
+                  Positioned( 
+                    bottom: 20, 
+                    right: 20,
+                    child: FloatingActionButton( 
+                      onPressed: () {}, 
+                      backgroundColor: Colors.blue, 
+                      child: const Icon(Icons.add), 
+                    ), 
+                  ), 
+                ], 
+              ), 
+            ), 
+
+            // Espaço entre Stack e Row 
+            const SizedBox(height: 20), 
+
+            // Row para organizar elementos horizontalmente 
+            Row( 
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+              children: [ 
+                // Criando botões em um Row com tons de azul 
+                ElevatedButton( 
+                  onPressed: () {}, 
+                  style: ElevatedButton.styleFrom( 
+                    backgroundColor: Colors.blue, // Cor de fundo azul 
+                    foregroundColor: Colors.white, // Cor do texto branca 
+                  ), 
+                  child: const Text('Botão 1'), 
+                ), 
+                ElevatedButton( 
+                  onPressed: () {}, 
+                  style: ElevatedButton.styleFrom( 
+                    backgroundColor: Colors.blueAccent, // Tom diferente de azul 
+                    foregroundColor: Colors.white, // Cor do texto branca 
+                  ), 
+                  child: const Text('Botão 2'), 
+                ), 
+                ElevatedButton( 
+                  onPressed: () {}, 
+                  style: ElevatedButton.styleFrom( 
+                    backgroundColor: Colors.lightBlue, // Azul mais claro 
+                    foregroundColor: Colors.white, // Cor do texto branca 
+                  ), 
+                  child: const Text('Botão 3'), 
+                ), 
+
+              ], 
+            ), 
+            // Espaço antes do Footer 
+            const SizedBox(height: 20), 
+
+            // Footer com Container 
+            Container( 
+              width: double.infinity,
+              padding: const EdgeInsets.all(10), 
+              color: Colors.blueAccent, 
+              child: const Text( 
+                'Footer - Exemplo de Layout', 
+                textAlign: TextAlign.center, 
+                style: TextStyle(color: Colors.white, fontSize: 16), 
+              ), 
+            ), 
+          ], 
         ), 
       ), 
     ); 
-  }
+  } 
 }

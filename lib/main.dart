@@ -53,7 +53,8 @@ class _ImageScreenState extends State<ImageScreen> {
     int randomPage = Random().nextInt(100) + 1; // Gera um número de página aleatória entre 1 e 100
 
     try {
-      final response = await _dio.get('https://picsum.photos/v2/list?page=$randomPage&limit=8');
+      //final response = await _dio.get('https://picsum.photos/v2/list?page=$randomPage&limit=8');
+      final response = await _dio.get('https://picsum.photos/v2/list?page=$randomPage&limit=6'); // Mais rápido para processar e se encaixa melhor no layout da tela
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         setState(() {
@@ -63,7 +64,8 @@ class _ImageScreenState extends State<ImageScreen> {
       }
     } catch (e) {
       setState(() => _isLoading = false);
-      print("Erro ao carregar imagens: $e");
+      //print("Erro ao carregar imagens: $e");
+      debugPrint("Erro ao carregar imagens: $e"); // Apenas para modo Debug
     }
   }
 
@@ -84,11 +86,28 @@ class _ImageScreenState extends State<ImageScreen> {
         itemBuilder:(context, index) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child : Image.network(
-              _images[index].imageUrl,
-              fit: BoxFit.cover,
+            child : 
+            /*
+              Image.network(
+                _images[index].imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(child: Icon(Icons.error, size: 50));
+                }
+              )
+            */
+
+            Image.network(
+              _images[index].imageUrl, 
+              fit: BoxFit.cover, 
+              cacheWidth: 500, 
+              cacheHeight: 300,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
+                return const Center(child: CircularProgressIndicator());
+              },
+              errorBuilder: (context, error, stackTree) {
                 return const Center(child: Icon(Icons.error, size: 50));
               }
             )

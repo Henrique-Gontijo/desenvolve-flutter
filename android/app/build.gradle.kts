@@ -42,9 +42,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false // Ativa ProGuard
-            shrinkResources false // Remove rescursos não usados para deixar APK mais leve
-            signingConfig signingConfigs.debug // Use o signingConfig correto, sem debug na versão final
+            minifyEnabled true // Ativa ProGuard
+            shrinkResources true // Remove rescursos não usados para deixar APK mais leve
+            signingConfig signingConfigs.release // Use o signingConfig correto, sem debug na versão final
             proGuardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
